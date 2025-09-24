@@ -11,9 +11,9 @@ A small Node.js + Express + MySQL REST API that simulates supply & demand flows:
 - **Backend:** Node.js, Express
 - **Database:** MySQL
 - **Tools:** Git/GitHub, Postman
-- **Optional:** Docker, GitHub Actions (CI)
+- **Optional:** Docker
 
-## Endpoints (MVP)
+## Endpoints
 
 - `GET /api/products` – list products + stock
 - `POST /api/products` – add a product
