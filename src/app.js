@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import db from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 
@@ -23,6 +24,10 @@ app.get("/", async (req, res) => {
 // Mount product routes
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
+
+// Error handling middleware
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

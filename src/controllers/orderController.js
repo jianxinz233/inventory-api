@@ -8,8 +8,7 @@ export const getOrders = async (_req, res) => {
     );
     res.json(row);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch orders" });
+    next(error);
   }
 };
 
@@ -26,19 +25,13 @@ export const getOrderById = async (req, res) => {
     }
     res.json(row[0]);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch order" });
+    next(error);
   }
 };
 
 // POST /api/orders {customer_name, product_id, quantity}
 export const createOrder = async (req, res) => {
   const { customer_name, product_id, quantity } = req.body;
-  if (!customer_name || !product_id || !quantity) {
-    return res
-      .status(400)
-      .json({ error: "Customer Name, Product ID and quantity are required" });
-  }
 
   const connection = await db.getConnection();
   try {
@@ -81,9 +74,8 @@ export const createOrder = async (req, res) => {
       total_price,
     });
   } catch (error) {
-    console.error(error);
     await connection.rollback();
-    res.status(500).json({ error: "Failed to create order" });
+    next(error);
   } finally {
     connection.release();
   }
